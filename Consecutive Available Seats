@@ -1,4 +1,19 @@
+USING TWO TABLES:
+
 SELECT DISTINCT C1.seat_id
 FROM cinema C1, cinema C2
 WHERE (C1.seat_id+1=C2.seat_id OR C1.seat_id-1=C2.seat_id) AND
 C1.FREE=1 AND C2.FREE=1;
+
+USING VARIABLES:
+
+SELECT DISTINCT C.seat_id 
+FROM(
+    SELECT C1.*, CASE
+    WHEN FREE=1 THEN @RK:=@RK+1
+    WHEN FREE=0 THEN @RK:=0
+    END AS 'CT'
+    FROM cinema C1, (SELECT @RK:=0) TT
+) T, cinema C
+WHERE CT>=2 AND C.seat_id<=T.seat_id AND C.seat_id>=T.seat_id-1;
+
