@@ -1,0 +1,10 @@
+# Write your MySQL query statement below
+SELECT DISTINCT S.*
+FROM(
+    SELECT *, CASE
+    WHEN people>=100 THEN @RK:=@RK+1
+    WHEN people<100 THEN @RK:=0
+    END AS RK
+    FROM stadium, (SELECT @RK:=0) TT
+) T, stadium S
+WHERE RK>=3 AND S.id<=T.id AND S.id>=T.id-2;
