@@ -1,0 +1,6 @@
+# Write your MySQL query statement below
+SELECT ABS(P1.X-P2.X) AS shortest
+FROM point P1, point P2
+WHERE P1.X!=P2.X
+ORDER BY shortest
+LIMIT 1;
