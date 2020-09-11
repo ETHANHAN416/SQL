@@ -10,4 +10,4 @@ AND (I1.TIV_2015) IN (
     SELECT I2.TIV_2015
     FROM insurance I2
     WHERE I2.PID !=I1.PID
-)
+);
