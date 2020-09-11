@@ -1,0 +1,10 @@
+# Write your MySQL query statement below
+SELECT ROUND(IFNULL(ACCEPT/TOTAL,0),2) AS accept_rate
+FROM (
+    SELECT COUNT(DISTINCT CONCAT(sender_id,send_to_id ))AS TOTAL
+    FROM friend_request
+) T1,
+(
+    SELECT COUNT(DISTINCT CONCAT(requester_id ,accepter_id  ))AS ACCEPT
+    FROM request_accepted
+) T2;
