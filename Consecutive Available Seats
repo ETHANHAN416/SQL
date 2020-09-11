@@ -1,0 +1,4 @@
+SELECT DISTINCT C1.seat_id
+FROM cinema C1, cinema C2
+WHERE (C1.seat_id+1=C2.seat_id OR C1.seat_id-1=C2.seat_id) AND
+C1.FREE=1 AND C2.FREE=1;
