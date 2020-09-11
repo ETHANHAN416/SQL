@@ -1,0 +1,10 @@
+# Write your MySQL query statement below
+SELECT D.NAME AS Department,
+    E.NAME AS Employee,
+    E.Salary
+FROM (
+    SELECT *,DENSE_RANK()OVER(PARTITION BY DepartmentId ORDER BY Salary desc) as RK   
+    FROM Employee 
+) E
+JOIN Department D ON D.Id=E.DepartmentId
+WHERE RK<=3;
