@@ -1,0 +1,6 @@
+SELECT MAX(Salary) AS SecondHighestSalary 
+FROM(
+    SELECT Salary, DENSE_RANK() OVER(ORDER BY Salary DESC) AS RK
+    FROM Employee 
+)T
+WHERE RK=2
