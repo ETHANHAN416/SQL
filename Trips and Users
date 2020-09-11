@@ -1,0 +1,11 @@
+SELECT T.Request_at AS Day, (
+    ROUND(
+    (SUM(IF (Status!='completed',1,0)))/COUNT(*),2)
+
+) AS 'Cancellation Rate'
+FROM Trips AS T
+JOIN Users AS U1 ON T.Client_Id =U1.Users_Id AND U1.Banned='NO'
+JOIN Users AS U2 ON T.Driver_Id =U2.Users_Id AND U2.Banned='NO'
+WHERE T.Request_at between '2013-10-01' and '2013-10-03'
+GROUP by DAY
+ORDER BY DAY;
