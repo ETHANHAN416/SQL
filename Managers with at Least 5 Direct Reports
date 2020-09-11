@@ -14,7 +14,7 @@ FROM (
     ) T1, (SELECT @P:=NULL, @RK:=0)T2)
     T
 JOIN Employee E2 ON E2.ID=T.ManagerId  #E2 ARE MANAGERS
-WHERE CT>=5
+WHERE CT>=5;
 
 GROUP BY + HAVING
 # Write your MySQL query statement below
@@ -22,4 +22,4 @@ SELECT E2.NAME
 FROM Employee E1
 JOIN Employee E2 ON E2.Id=E1.ManagerId #E2 ARE MANAGERS
 GROUP BY E1.ManagerId 
-HAVING COUNT(*)>=5
+HAVING COUNT(*)>=5;
