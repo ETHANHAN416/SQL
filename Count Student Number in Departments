@@ -1,0 +1,6 @@
+# Write your MySQL query statement below
+SELECT dept_name, COUNT(DISTINCT student_id )AS student_number 
+FROM department D 
+LEFT JOIN student S USING (dept_id)
+GROUP BY dept_id 
+ORDER BY student_number DESC, dept_name   
