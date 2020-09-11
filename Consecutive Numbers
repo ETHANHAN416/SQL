@@ -1,0 +1,12 @@
+# Write your MySQL query statement below
+SELECT DISTINCT NUM AS ConsecutiveNums 
+FROM(
+    SELECT *, CASE
+    WHEN @P=NUM THEN @RK:=@RK+1
+    WHEN @P:=NUM THEN @RK:=1
+    END
+    AS 'RK'
+    FROM Logs, (SELECT @P:=NULL, @RK:=0)T
+) TT
+WHERE RK>=3
+ORDER BY Id 
