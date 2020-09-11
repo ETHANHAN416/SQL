@@ -1,2 +1,2 @@
 # SQL
-MYSQL_SKILL
+MYSQL challenges I have done through Leetcode.
