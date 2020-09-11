@@ -9,4 +9,4 @@ FROM(
     FROM Logs, (SELECT @P:=NULL, @RK:=0)T
 ) TT
 WHERE RK>=3
-ORDER BY Id 
+ORDER BY Id;
