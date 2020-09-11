@@ -1,0 +1,6 @@
+SELECT C.Name 
+FROM Candidate C 
+JOIN Vote V ON V.CandidateId=C.ID
+GROUP BY V.CandidateId  
+ORDER BY COUNT(DISTINCT V.ID) DESC
+limit 1
