@@ -1,0 +1,25 @@
+USING VARIABLES
+# Write your MySQL query statement below
+SELECT DISTINCT E2.NAME 
+FROM
+(SELECT ManagerId, CASE
+WHEN @P=ManagerId THEN @RK:=@RK+1
+WHEN @p:=ManagerId THEN @RK:=1
+END AS 'CT' 
+FROM (
+    SELECT ManagerId, ID
+    FROM Employee
+    ORDER BY ManagerId 
+
+    ) T1, (SELECT @P:=NULL, @RK:=0)T2)
+    T
+JOIN Employee E2 ON E2.ID=T.ManagerId  #E2 ARE MANAGERS
+WHERE CT>=5
+
+GROUP BY + HAVING
+# Write your MySQL query statement below
+SELECT E2.NAME
+FROM Employee E1
+JOIN Employee E2 ON E2.Id=E1.ManagerId #E2 ARE MANAGERS
+GROUP BY E1.ManagerId 
+HAVING COUNT(*)>=5
