@@ -1,0 +1,13 @@
+# Write your MySQL query statement below
+SELECT SUM(I1.TIV_2016) AS TIV_2016 
+FROM insurance I1
+WHERE (I1.LAT, I1.LON) NOT IN (
+    SELECT I2.LAT, I2.LON
+    FROM insurance I2
+    WHERE I2.PID !=I1.PID
+    )
+AND (I1.TIV_2015) IN (
+    SELECT I2.TIV_2015
+    FROM insurance I2
+    WHERE I2.PID !=I1.PID
+)
