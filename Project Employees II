@@ -4,3 +4,16 @@ FROM (SELECT project_id, DENSE_RANK()OVER(ORDER BY COUNT(*) DESC) AS RK
     FROM Project
     GROUP BY project_id) T
 WHERE RK=1;
+
+
+
+SELECT project_id 
+FROM Project
+GROUP BY project_id  
+HAVING COUNT(employee_id)=(
+    SELECT COUNT(employee_id)
+    FROM Project 
+    GROUP BY project_id  
+    ORDER BY COUNT(employee_id) DESC
+    LIMIT 1
+);
