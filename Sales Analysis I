@@ -1,0 +1,8 @@
+# Write your MySQL query statement below
+SELECT seller_id 
+FROM (
+    SELECT seller_id, price, DENSE_RANK()OVER(ORDER BY SUM(price) DESC) AS RK
+    FROM Sales 
+    GROUP BY seller_id 
+)T
+WHERE RK=1;
