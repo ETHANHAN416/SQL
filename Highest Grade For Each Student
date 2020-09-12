@@ -1,7 +1,7 @@
 # Write your MySQL query statement below
 SELECT student_id, course_id, GRADE FROM (
     SELECT student_id, course_id, grade, 
-    DENSE_RANK() OVER(PARTITION BY student_id ORDER BY GRADE DESC) AS RK
+    DENSE_RANK() OVER(PARTITION BY student_id ORDER BY GRADE DESC, course_id) AS RK
     FROM Enrollments
     )T
 WHERE T.RK=1
