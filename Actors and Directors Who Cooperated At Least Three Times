@@ -1,0 +1,14 @@
+# Write your MySQL query statement below
+SELECT DISTINCT actor_id, director_id 
+FROM(
+    SELECT actor_id, director_id, CASE
+    WHEN @P=CONCAT(actor_id, director_id) THEN @RK:=@RK+1
+    WHEN @P:=CONCAT(actor_id, director_id) THEN @RK:=1
+    END AS 'RK'
+    FROM (
+        SELECT actor_id, director_id
+        FROM ActorDirector
+        ORDER BY actor_id, director_id
+    )TE, (SELECT @P:=NULL, @RK:=0) TT
+)T
+WHERE RK>=3;
