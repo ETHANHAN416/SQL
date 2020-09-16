@@ -1,0 +1,8 @@
+# Write your MySQL query statement below
+SELECT IFNULL(ROUND(AVG(NUM),2),0) AS average_sessions_per_user 
+FROM(
+    SELECT COUNT(DISTINCT session_id) AS NUM
+    FROM Activity 
+    WHERE DATEDIFF('2019-07-27', activity_date) < 30
+    GROUP BY user_id 
+) T;
