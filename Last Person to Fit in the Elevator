@@ -1,0 +1,9 @@
+SELECT person_name
+FROM(
+    SELECT *, @T:=@T+weight AS TOTAL
+    FROM Queue, (SELECT @T:=0) TT 
+    ORDER BY turn 
+)T 
+WHERE TOTAL<=1000 
+ORDER BY turn DESC
+LIMIT 1;
