@@ -1,0 +1,10 @@
+# Write your MySQL query statement below
+SELECT person_name 
+FROM(
+    SELECT person_name, @TOTAL:=@TOTAL+weight AS TW
+    FROM Queue, (SELECT @TOTAL:=0)T
+    ORDER BY turn 
+)TT
+WHERE TW<=1000
+ORDER BY TW DESC
+LIMIT 1;
