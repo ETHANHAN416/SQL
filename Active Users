@@ -1,0 +1,16 @@
+# Write your MySQL query statement below
+SELECT DISTINCT id, name
+FROM(
+    SELECT id, 
+    IF(@P_ID:=id AND DATEDIFF(login_date,@P_DATE)=1, @CT:=@CT+1, @CT:=1) AS CT,
+    @P_DATE:=login_date
+    FROM (
+        SELECT id,login_date
+        FROM Logins 
+        GROUP BY id, login_date
+        ORDER BY id, login_date
+    )T1, (SELECT @P_ID:=0, @P_DATE:=NULL, @CT:=0)T2
+)T
+JOIN Accounts USING(id)
+WHERE CT>=5
+ORDER BY id;
