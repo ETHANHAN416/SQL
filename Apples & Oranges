@@ -1,0 +1,13 @@
+# Write your MySQL query statement below
+SELECT sale_date, (A.sold_num-O.sold_num) AS diff
+FROM (
+    SELECT sale_date, fruit as apples, sold_num
+    FROM Sales
+    WHERE fruit = 'apples'
+)A 
+LEFT JOIN (
+    SELECT sale_date, fruit as oranges, sold_num
+    FROM Sales
+    WHERE fruit = 'oranges'
+)O USING(sale_date)
+GROUP BY A.sale_date;
