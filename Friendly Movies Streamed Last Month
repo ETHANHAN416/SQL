@@ -1,0 +1,5 @@
+# Write your MySQL query statement below
+SELECT DISTINCT title
+FROM Content C
+JOIN TVProgram T ON T.content_id = C.content_id AND DATE_FORMAT(T.program_date, '%Y-%m')='2020-06'
+WHERE Kids_content = 'Y' AND content_type='Movies';
