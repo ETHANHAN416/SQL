@@ -1,0 +1,17 @@
+# Write your MySQL query statement below
+SELECT DISTINCT activity
+FROM Friends 
+WHERE activity NOT IN
+(
+    SELECT activity 
+    FROM (
+        SELECT activity, DENSE_RANK()OVER(ORDER BY COUNT(id)) AS CT
+        FROM Friends
+        GROUP BY activity
+        UNION ALL 
+        SELECT activity, DENSE_RANK()OVER(ORDER BY COUNT(id) DESC) AS CT
+        FROM Friends
+        GROUP BY activity
+    )T
+    WHERE CT=1
+);
