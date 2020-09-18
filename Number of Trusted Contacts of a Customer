@@ -1,0 +1,17 @@
+# Write your MySQL query statement below
+SELECT I.invoice_id, CU.customer_name, I.price, (COUNT(DISTINCT contact_name)) AS contacts_cnt,
+IFNULL(T.N,0) AS trusted_contacts_cnt 
+FROM Invoices I 
+LEFT JOIN Customers CU ON CU.customer_id = I.user_id
+LEFT JOIN Contacts CO ON CO.user_id = I.user_id
+LEFT JOIN (
+    SELECT COUNT(DISTINCT C1.contact_name) AS N, user_id     
+    FROM Contacts C1
+    WHERE C1.contact_email IN(
+        SELECT email
+        FROM Customers
+    )
+    GROUP BY C1.user_id
+) T ON T.user_id= I.user_id 
+GROUP BY invoice_id
+ORDER BY invoice_id;
