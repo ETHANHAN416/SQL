@@ -1,0 +1,13 @@
+# Write your MySQL query statement below
+SELECT C.name AS country
+FROM(
+    SELECT caller_id AS id, duration 
+    FROM Calls 
+    UNION ALL
+    SELECT callee_id AS id, duration 
+    FROM Calls
+)T
+LEFT JOIN Person P ON P.id = T.id
+LEFT JOIN Country C ON LEFT(P.phone_number,3) = C.country_code 
+GROUP BY C.name
+HAVING AVG(duration)>(SELECT AVG(duration) FROM Calls);
