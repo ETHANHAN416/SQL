@@ -1,0 +1,13 @@
+# Write your MySQL query statement below
+SELECT product_name, T.product_id, order_id, order_date 
+FROM (
+    SELECT product_id, order_id, order_date
+    FROM Orders
+    WHERE(product_id, order_date) IN(
+        SELECT product_id, MAX(order_date)
+        FROM ORDERS
+        GROUP BY product_id
+    )
+) T
+LEFT JOIN Products P ON P.product_id = T.product_id 
+ORDER BY product_name, product_id, order_id;
