@@ -1,0 +1,17 @@
+SELECT Id, Company, Salary
+FROM(
+    SELECT Id, Company, Salary, IF(@P=Company,@RK:=@RK+1,@RK:=1) AS RK, 
+    @P:=Company
+    FROM (
+        SELECT *
+        FROM Employee 
+        GROUP BY Company, Salary, Id
+        ORDER BY Company, Salary, Id
+    ) T1, (SELECT @P:=NULL, @RK:=-1) T2
+) T 
+JOIN (
+    SELECT Company, COUNT(DISTINCT Id) AS TOTAL
+    FROM Employee
+    GROUP BY Company
+) TT USING(Company)
+WHERE RK<=TOTAL/2+1 AND RK>=TOTAL/2;
