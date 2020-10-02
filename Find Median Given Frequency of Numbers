@@ -1,0 +1,12 @@
+# Write your MySQL query statement below
+SELECT AVG(Number) AS median 
+FROM (
+    SELECT Number, Frequency, @SUM AS S1, @SUM:=@SUM+Frequency AS S2
+    FROM(
+        SELECT *
+        FROM Numbers 
+        GROUP BY Number
+        ORDER BY Number
+    ) T1, (SELECT @SUM:=0) T2
+) T
+WHERE S1<=(SELECT SUM(Frequency)FROM Numbers)/2 AND S2>=(SELECT SUM(Frequency)FROM Numbers)/2;
