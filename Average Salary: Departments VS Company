@@ -1,0 +1,21 @@
+# Write your MySQL query statement below
+SELECT DISTINCT T1.pay_month, T1.department_id, CASE
+WHEN AVER>TOTAL THEN 'higher'
+WHEN AVER=TOTAL THEN 'same'
+ELSE 'lower'
+END AS 'comparison'
+FROM
+(SELECT DATE_FORMAT(pay_date,'%Y-%m') as 'pay_month', department_id, AVG(AMOUNT) AS AVER
+    FROM salary
+    JOIN employee USING(employee_id)
+    GROUP BY pay_month, department_id 
+)T1
+JOIN
+(
+    SELECT DATE_FORMAT(pay_date,'%Y-%m') as 'pay_month', department_id, AVG(AMOUNT) AS TOTAL
+    FROM salary
+    JOIN employee USING(employee_id)
+    GROUP BY pay_month
+) T2 USING (pay_month)
+GROUP BY pay_month,department_id 
+ORDER BY pay_month DESC;
