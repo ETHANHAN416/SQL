@@ -1,0 +1,14 @@
+# Write your MySQL query statement below
+SELECT install_dt, COUNT(DISTINCT T1.player_id) AS installs, 
+ROUND(COUNT(A.player_id)/COUNT(DISTINCT T1.player_id),2 )AS Day1_retention
+FROM(
+    SELECT player_id, event_date AS install_dt
+    FROM(
+        SELECT player_id, event_date, 
+        DENSE_RANK()OVER(PARTITION BY player_id ORDER BY event_date) AS RK
+        FROM Activity
+    )T
+    WHERE RK=1
+) AS T1
+LEFT JOIN Activity A ON A.player_id=T1.player_id AND DATEDIFF(A.event_date,install_dt)=1
+GROUP BY install_dt;
