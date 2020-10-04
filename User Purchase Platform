@@ -1,0 +1,18 @@
+# Write your MySQL query statement below
+SELECT T.spend_date, T.platform, IFNULL(SUM(T2.amount),0) AS total_amount, IFNULL(COUNT(DISTINCT user_id),0) AS total_users 
+FROM(
+    SELECT DISTINCT spend_date, 'desktop' AS platform 
+    FROM Spending 
+    UNION ALL 
+    SELECT DISTINCT spend_date, 'mobile' AS platform 
+    FROM Spending 
+    UNION ALL 
+    SELECT DISTINCT spend_date, 'both' AS platform 
+    FROM Spending 
+)T
+LEFT JOIN(
+    SELECT user_id, spend_date, IF(COUNT(DISTINCT platform)=1, platform, 'both') AS platform, SUM(amount) AS amount 
+    FROM Spending 
+    GROUP BY user_id, spend_date 
+)T2 ON T2.spend_date= T.spend_date AND T2.platform=T.platform
+GROUP BY T.spend_date, T.platform
