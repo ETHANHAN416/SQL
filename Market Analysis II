@@ -1,0 +1,13 @@
+# Write your MySQL query statement below
+SELECT user_id AS seller_id, IF(Second_brand=favorite_brand,'yes','no') AS 2nd_item_fav_brand
+FROM Users U 
+LEFT JOIN (
+    SELECT seller_id, item_brand AS Second_brand
+    FROM (
+        SELECT seller_id,item_id, 
+        ROW_NUMBER()OVER(PARTITION BY seller_id ORDER BY order_date) AS RK
+        FROM Orders O 
+    )T
+    LEFT JOIN Items USING (item_id)
+    WHERE RK=2
+) SEC ON U.user_id= SEC.seller_id
